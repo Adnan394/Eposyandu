@@ -24,12 +24,12 @@
                     @foreach ($data as $item)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->NIK }}</td>
+                            <td>{{ $item->nama }}</td>
+                            <td>{{ $item->nik }}</td>
                             <td>{{ $item->alamat}}</td>
                             <td>{{ $item->no_telp}}</td>
                             <td>
-                                <img src="{{ $item->image}}" alt="" width="50px">
+                                <img src="{{ Storage::url($item->image) }}" alt="" width="50px">
                             </td>
                         </tr>
                     @endforeach

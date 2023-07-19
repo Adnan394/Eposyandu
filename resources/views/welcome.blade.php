@@ -17,31 +17,31 @@
         <h2 style="font-weight: 700" class="text-center" id="layanan">Layanan</h2>
         <div class="layanan  py-4 mb-5" >
             <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <a href="" style="text-decoration:none;" class="text-dark">
+                <a href="{{ route('anak.create') }}" style="text-decoration:none;" class="text-dark">
                     <div class="bg-white shadow-sm px-5 py-4 rounded d-flex flex-column align-items-center gap-3" style="width:200px;">
                         <img src="{{ asset('assets/image/anak.png') }}" alt="" width="50px" class="center"> 
                         <h5 class="text-center">Masukan Data Anak</h5>
                     </div>
                 </a>
-                <a href="" style="text-decoration:none;" class="text-dark">
+                <a href="{{ route('imunisasi.create') }}" style="text-decoration:none;" class="text-dark">
                     <div class="bg-white shadow-sm px-5 py-4 rounded d-flex flex-column align-items-center gap-3" style="width:200px;">
                         <img src="{{ asset('assets/image/imun.png') }}" alt="" width="50px"> 
                         <h5 class="text-center">Imunisasi Anak</h5>
                     </div>
                 </a>
-                <a href="" style="text-decoration:none;" class="text-dark">
+                <a href="{{ route('data-posyandu') }}" style="text-decoration:none;" class="text-dark">
                     <div class="bg-white shadow-sm px-5 py-4 rounded d-flex flex-column align-items-center gap-3" style="width:200px;">
                         <img src="{{ asset('assets/image/posyandu.png') }}" alt="" width="50px" class="center"> 
                         <h5 class="text-center">Data Posyandu</h5>
                     </div>
                 </a>
-                <a href="" style="text-decoration:none;" class="text-dark">
+                <a href="{{ route('data-petugas') }}" style="text-decoration:none;" class="text-dark">
                     <div class="bg-white shadow-sm px-5 py-4 rounded d-flex flex-column align-items-center gap-3" style="width:200px;">
                         <img src="{{ asset('assets/image/petugas.png') }}" alt="" width="50px" class="center"> 
                         <h5 class="text-center">Data Petugas</h5>
                     </div>
                 </a>
-                <a href="" style="text-decoration:none;" class="text-dark">
+                <a href="{{ route('data-vaksin') }}" style="text-decoration:none;" class="text-dark">
                     <div class="bg-white shadow-sm px-5 py-4 rounded d-flex flex-column align-items-center gap-3" style="width:200px;">
                         <img src="{{ asset('assets/image/vaksin.png') }}" alt="" width="50px" class="center"> 
                         <h5 class="text-center">Data Vaksin</h5>

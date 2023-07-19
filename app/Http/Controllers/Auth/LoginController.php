@@ -46,7 +46,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             if(Auth::user()->role == 0) {
-                return redirect('/home');
+                return redirect('/admin/home');
             }else {
                 return redirect('/');
             }

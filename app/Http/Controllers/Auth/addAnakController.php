@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\auth;
 
-use App\Models\Posyandu;
+use App\Models\Anak;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class PosyanduController extends Controller
+class addAnakController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +16,8 @@ class PosyanduController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role != 0) {
-            return redirect('403');
-        }
-        $data = Posyandu::paginate(10);
-        return view('admin.posyandu', ['data' => $data]);
+        $data = Anak::where('id_ibu', Auth::user()->id)->get();
+        return view('anak.index', ['data' => $data]);
     }
 
     /**
@@ -29,7 +27,7 @@ class PosyanduController extends Controller
      */
     public function create()
     {
-        //
+        return view('anak.anak');
     }
 
     /**
@@ -40,18 +38,18 @@ class PosyanduController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::user()->role != 0) {
-            return redirect('403');
-        }
-        Posyandu::create([
-            'name' => $request->name,
-            'alamat' => $request->alamat,
-            'kalurahan' => $request->kelurahan,
-            'kecamatan' => $request->kecamatan,
-            'kabupaten' => $request->kabupaten,
+        // return $request->all();
+        Anak::create([
+            'nama' => $request->name,
+            'nik' => $request->nik,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'usia' => $request->usia,
+            'id_ibu' => $request->id_ibu,
         ]);
 
-        return redirect()->route('posyandu.index');
+        return redirect('/');
     }
 
     /**
@@ -85,19 +83,7 @@ class PosyanduController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(Auth::user()->role != 0) {
-            return redirect('403');
-        }
-        $data = [
-            'name' => $request->name,
-            'alamat' => $request->alamat,
-            'kalurahan' => $request->kelurahan,
-            'kecamatan' => $request->kecamatan,
-            'kabupaten' => $request->kabupaten,
-        ];
-
-        Posyandu::where('id', $id)->update($data);
-        return redirect()->route('posyandu.index');
+        //
     }
 
     /**
@@ -108,10 +94,6 @@ class PosyanduController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::user()->role != 0) {
-            return redirect('403');
-        }
-        Posyandu::where('id', $id)->delete();
-        return redirect()->route('posyandu.index');
+        //
     }
 }

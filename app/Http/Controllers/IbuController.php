@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Ibu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class IbuController extends Controller
 {
@@ -14,6 +16,9 @@ class IbuController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->role != 0) {
+            return redirect('403');
+        }
         $data = Ibu::paginate(10);
         return view('admin/ibu', ['data'=>$data]);
     }
@@ -36,7 +41,20 @@ class IbuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $path = 'Foto Ibu'; 
+        $file = $request->file('image');
+        Storage::putFileAs($path, $file, $file->getClientOriginalName());
+
+        Ibu::create([
+            'akun_id' => $request->akun_id,
+            'nama' => $request->name,
+            'nik' => $request->nik,
+            'alamat' => $request->alamat,
+            'no_telp' => $request->no_telp,
+            'image' => $path . '/' . $file->getClientOriginalName(),
+        ]);
+
+        return redirect('/');
     }
 
     /**

@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   
   <style>
-    :root {
+    /* :root {
     --header-height: 3rem;
     --nav-width: 68px;
     --first-color: #4723d9;
@@ -59,7 +59,7 @@
       justify-content: space-between;
       padding: 0 1rem;
       background-color: var(--white-color);
-      z-index: var(--z-fixed);
+      z-index: var(-1);
       transition: 0.5s;
   }
   .header_toggle {
@@ -173,7 +173,7 @@
       .body-pd {
           padding-left: calc(var(--nav-width) + 188px);
       }
-  }
+  } */
 
     /* Sidebar */
     .sidebar {
@@ -227,7 +227,7 @@
     }
   </style>
 </head>
-<body class="bg-light">
+<body class="bg-light" style="margin-left: 3rem">
     <div class="container-fluid">
         <div class="row">
           <!-- Sidebar -->
@@ -253,7 +253,7 @@
     
               <!-- Menu Item 2 -->
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('anak.index') }}">
+                <a class="nav-link" href="{{ route('dataanak.index') }}">
                   <i class="bi bi-people"></i> Anak
                 </a>
               </li>
@@ -272,7 +272,7 @@
               </li>
               <!-- Menu Item 2 -->
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('imunisasi.index') }}">
+                <a class="nav-link" href="{{ route('data-imunisasi.index') }}">
                   <i class="bi bi-capsule-pill"></i> Imunisasi
                 </a>
               </li>
