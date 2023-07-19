@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\auth;
+namespace App\Http\Controllers;
 
+use App\Models\Vaksin;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
-class LoginController extends Controller
+class vaksinController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,8 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('auth.login');
+        $data = Vaksin::paginate(10);
+        return view('admin/vaksin', ['data'=>$data]);
     }
 
     /**
@@ -37,22 +36,11 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+        Vaksin::create([
+            'nama_vaksin' => $request->vaksin,
         ]);
- 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
 
-            if(Auth::user()->role == 0) {
-                return redirect('/home');
-            }else {
-                return redirect('/');
-            }
-        }
- 
-        return redirect()->route('login');
+        return redirect()->route('vaksin.index');
     }
 
     /**
@@ -86,7 +74,11 @@ class LoginController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'nama_vaksin' => $request->vaksin,
+        ];
+        Vaksin::where('id', $id)->update($data);
+        return redirect()->route('vaksin.index');
     }
 
     /**
@@ -97,15 +89,7 @@ class LoginController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-
-    public function logout()
-    {
-        Session::flush();
-        
-        Auth::logout();
-
-        return redirect('login');
+        Vaksin::where('id', $id)->delete();
+        return redirect()->route('vaksin.index');
     }
 }
