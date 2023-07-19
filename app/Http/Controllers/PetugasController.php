@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Petugas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PetugasController extends Controller
@@ -15,6 +16,9 @@ class PetugasController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->role != 0) {
+            return redirect('403');
+        }
         $data = Petugas::paginate(10);
         return view('admin/petugas', ['data' => $data]);
     }
@@ -37,8 +41,9 @@ class PetugasController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
-        // dd($request->all());
+        if(Auth::user()->role != 0) {
+            return redirect('403');
+        }
         $path = 'Petugas'; 
         $file = $request->file('image');
         Storage::putFileAs($path, $file, $file->getClientOriginalName());
@@ -88,6 +93,9 @@ class PetugasController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(Auth::user()->role != 0) {
+            return redirect('403');
+        }
         $path = 'Petugas'; 
         $file = $request->file('image');
         Storage::putFileAs($path, $file, $file->getClientOriginalName());
@@ -115,6 +123,9 @@ class PetugasController extends Controller
      */
     public function destroy($id)
     {
+        if(Auth::user()->role != 0) {
+            return redirect('403');
+        }
         Petugas::where('id', $id)->delete();
         return redirect()->route('petugas.index');
     }

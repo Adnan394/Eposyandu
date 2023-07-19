@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Imunisasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ImunisasiController extends Controller
 {
@@ -14,6 +15,9 @@ class ImunisasiController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->role != 0) {
+            return redirect('403');
+        }
         $data = Imunisasi::paginate(10);
         return view('admin/imunisasi', ['data'=>$data]);
     }

@@ -58,14 +58,31 @@
                 <a class="nav-link" href="#tentang">Tentang Kami</a>
               </li>
               <li class="nav-item">
-                  <div class="dropdown">
+                  <div class="dropdown dropstart">
+                    @php
+                        $badge = App\Models\Ibu::where('akun_id', Auth::user()->id)->first();
+                        $pengaturan = App\Models\Ibu::where('akun_id', Auth::user()->id)->first();
+                    @endphp
+                    @if ($badge)
+                    <a class="nav-link" href="#" class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Profile </a>
+                    @else
                     <a class="nav-link" href="#" class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Profile <span class="badge text-bg-danger">Lengkapi</span></a>
+                    @endif
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Profile</a></li>
+                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profile">Profile</a></li>
+                      @if ($pengaturan)
                       <li><a class="dropdown-item" href="#">Pengaturan</a></li>
+                      @else
+                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#pengaturan">Pengaturan</a></li>
+                      @endif
+                      <li><a class="dropdown-item" href="{{ route('anak.index') }}">Data Anak</a></li>
+                      <li><a class="dropdown-item" href="{{ route('imunisasi.index') }}">Riwayat Imunisasi</a></li>
+                      <hr>
+                      <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                     </ul>
                   </div>
-              </li>
+                  <livewire:modal.profile />
+                  <livewire:modal.pengaturan />
             </ul>
           </div>
         </div>
@@ -79,9 +96,18 @@
     <footer class="bg-main py-5 mt-5">
         <div class="container">
             <div class="row">
-                <div class="col">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae, odit sed voluptatibus necessitatibus itaque dolor optio voluptas magni nisi officiis.</div>
-                <div class="col">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae, odit sed voluptatibus necessitatibus itaque dolor optio voluptas magni nisi officiis.</div>
-                <div class="col">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae, odit sed voluptatibus necessitatibus itaque dolor optio voluptas magni nisi officiis.</div>
+                <div class="col">
+                    <h5 style="font-weight: 600">Manfaat Imunisasi</h5>
+                    <p> membentuk kekebalan tubuh agar tidak mudah terinfeksi virus penyebab penyakit. Pemberian imunisasi pada bayi menjadi hal yang penting, sebab tubuh bayi memiliki tingkat imunitas yang rendah sehingga harus segera mendapatkan perlindungan dari infeksi penyakit menular.</p>
+                </div>
+                <div class="col">
+                    <h5 style="font-weight: 600">Contact</h5>
+                    <p>WhatsApp : (+62) 937 1237 9812</p>
+                    <p>Email    : Example@email.com</p>
+                </div>
+                <div class="col">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63301.06345446958!2d109.19322357052869!3d-7.43018888781828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e655c3136423d1d%3A0x4027a76e352e4a0!2sPurwokerto%2C%20Kabupaten%20Banyumas%2C%20Jawa%20Tengah!5e0!3m2!1sid!2sid!4v1689797612103!5m2!1sid!2sid" width="350" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
             </div>
         </div>
     </footer>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vaksin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class vaksinController extends Controller
 {
@@ -14,6 +15,9 @@ class vaksinController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->role != 0) {
+            return redirect('403');
+        }
         $data = Vaksin::paginate(10);
         return view('admin/vaksin', ['data'=>$data]);
     }
@@ -36,6 +40,9 @@ class vaksinController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user()->role != 0) {
+            return redirect('403');
+        }
         Vaksin::create([
             'nama_vaksin' => $request->vaksin,
         ]);
@@ -74,6 +81,9 @@ class vaksinController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(Auth::user()->role != 0) {
+            return redirect('403');
+        }
         $data = [
             'nama_vaksin' => $request->vaksin,
         ];
@@ -89,6 +99,9 @@ class vaksinController extends Controller
      */
     public function destroy($id)
     {
+        if(Auth::user()->role != 0) {
+            return redirect('403');
+        }
         Vaksin::where('id', $id)->delete();
         return redirect()->route('vaksin.index');
     }

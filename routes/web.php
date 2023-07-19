@@ -10,7 +10,12 @@ use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\PosyanduController;
 use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\auth\addAnakController;
 use App\Http\Controllers\auth\RegisterController;
+use App\Http\Controllers\auth\addImunisasiController;
+use App\Models\Petugas;
+use App\Models\Posyandu;
+use App\Models\Vaksin;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,13 +37,33 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('auth');
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth')->prefix('admin')->group(function(){
     Route::get('/user', [UserController::class, 'index'])->name('user');
-    Route::resource('/anak', AnakController::class);
+    Route::resource('/dataanak', AnakController::class);
     Route::resource('/ibu', IbuController::class);
-    Route::resource('/imunisasi', ImunisasiController::class);
+    Route::resource('/data-imunisasi', ImunisasiController::class);
     Route::resource('/vaksin', vaksinController::class);
     Route::resource('/petugas', PetugasController::class);
     Route::resource('/posyandu', PosyanduController::class);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
+Route::middleware('auth')->group(function(){
+    Route::resource('/anak', addAnakController::class);
+    Route::resource('/imunisasi', addImunisasiController::class);
+    Route::get('data-petugas', function() {
+        $data = Petugas::paginate(10);
+        return view('data.petugas', ['data'=>$data]);
+    })->name('data-petugas');
+    Route::get('data-vaksin', function() {
+        $data = Vaksin::paginate(10);
+        return view('data.vaksin', ['data'=>$data]);
+    })->name('data-vaksin');
+    Route::get('data-posyandu', function() {
+        $data = Posyandu::paginate(10);
+        return view('data.posyandu', ['data'=>$data]);
+    })->name('data-posyandu');
+});
+
+Route::get('403', function() {
+    return view('403');
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Anak;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AnakController extends Controller
 {
@@ -12,8 +13,15 @@ class AnakController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        
+    }
     public function index()
     {
+        if(Auth::user()->role != 0) {
+            return redirect('403');
+        }
         $data = Anak::paginate(10);
         return view('admin/anak', ['data' => $data]);
     }

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\auth;
 
-use App\Models\Posyandu;
+use App\Models\Imunisasi;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class PosyanduController extends Controller
+class addImunisasiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +16,8 @@ class PosyanduController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role != 0) {
-            return redirect('403');
-        }
-        $data = Posyandu::paginate(10);
-        return view('admin.posyandu', ['data' => $data]);
+        $data = Imunisasi::where('id_ibu', Auth::user()->id)->get();
+        return view('imunisasi.index', ['data' => $data]);
     }
 
     /**
@@ -29,7 +27,7 @@ class PosyanduController extends Controller
      */
     public function create()
     {
-        //
+        return view('imunisasi.imunisasi');
     }
 
     /**
@@ -40,18 +38,19 @@ class PosyanduController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::user()->role != 0) {
-            return redirect('403');
-        }
-        Posyandu::create([
-            'name' => $request->name,
-            'alamat' => $request->alamat,
-            'kalurahan' => $request->kelurahan,
-            'kecamatan' => $request->kecamatan,
-            'kabupaten' => $request->kabupaten,
+        // retusrn $request->all();
+        Imunisasi::create([
+            'tanggal_imunisasi' => $request->tanggal_imunisasi,
+            'usia_saat_vaksin' => $request->usia_saat_vaksin,
+            'tinggi_badan' => $request->tinggi_badan,
+            'berat_badan' => $request->berat_badan,
+            'periode' => $request->periode,
+            'id_vaksin' => $request->id_vaksin,
+            'id_anak' => $request->id_anak,
+            'id_ibu' => $request->id_ibu,
+            'id_petugas' => $request->id_petugas,
         ]);
-
-        return redirect()->route('posyandu.index');
+        return redirect()->route('imunisasi.index');
     }
 
     /**
@@ -85,19 +84,7 @@ class PosyanduController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(Auth::user()->role != 0) {
-            return redirect('403');
-        }
-        $data = [
-            'name' => $request->name,
-            'alamat' => $request->alamat,
-            'kalurahan' => $request->kelurahan,
-            'kecamatan' => $request->kecamatan,
-            'kabupaten' => $request->kabupaten,
-        ];
-
-        Posyandu::where('id', $id)->update($data);
-        return redirect()->route('posyandu.index');
+        //
     }
 
     /**
@@ -108,10 +95,6 @@ class PosyanduController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::user()->role != 0) {
-            return redirect('403');
-        }
-        Posyandu::where('id', $id)->delete();
-        return redirect()->route('posyandu.index');
+        //
     }
 }
