@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\auth;
+namespace App\Http\Controllers;
 
+use App\Models\Posyandu;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
-class LoginController extends Controller
+class PosyanduController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,8 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('auth.login');
+        $data = Posyandu::paginate(10);
+        return view('admin.posyandu', ['data' => $data]);
     }
 
     /**
@@ -37,22 +36,15 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+        Posyandu::create([
+            'name' => $request->name,
+            'alamat' => $request->alamat,
+            'kalurahan' => $request->kelurahan,
+            'kecamatan' => $request->kecamatan,
+            'kabupaten' => $request->kabupaten,
         ]);
- 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
 
-            if(Auth::user()->role == 0) {
-                return redirect('/home');
-            }else {
-                return redirect('/');
-            }
-        }
- 
-        return redirect()->route('login');
+        return redirect()->route('posyandu.index');
     }
 
     /**
@@ -86,7 +78,16 @@ class LoginController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'name' => $request->name,
+            'alamat' => $request->alamat,
+            'kalurahan' => $request->kelurahan,
+            'kecamatan' => $request->kecamatan,
+            'kabupaten' => $request->kabupaten,
+        ];
+
+        Posyandu::where('id', $id)->update($data);
+        return redirect()->route('posyandu.index');
     }
 
     /**
@@ -97,15 +98,7 @@ class LoginController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-
-    public function logout()
-    {
-        Session::flush();
-        
-        Auth::logout();
-
-        return redirect('login');
+        Posyandu::where('id', $id)->delete();
+        return redirect()->route('posyandu.index');
     }
 }

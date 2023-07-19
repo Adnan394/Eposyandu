@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\auth;
+namespace App\Http\Controllers;
 
+use App\Models\Imunisasi;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
-class LoginController extends Controller
+class ImunisasiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,8 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('auth.login');
+        $data = Imunisasi::paginate(10);
+        return view('admin/imunisasi', ['data'=>$data]);
     }
 
     /**
@@ -37,22 +36,7 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
- 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            if(Auth::user()->role == 0) {
-                return redirect('/home');
-            }else {
-                return redirect('/');
-            }
-        }
- 
-        return redirect()->route('login');
+        //
     }
 
     /**
@@ -98,14 +82,5 @@ class LoginController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function logout()
-    {
-        Session::flush();
-        
-        Auth::logout();
-
-        return redirect('login');
     }
 }

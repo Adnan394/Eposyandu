@@ -1,5 +1,9 @@
 @extends('layouts.app')
-
+@section('title')
+    <div class="container">
+        <h1>Dashboard</h1>
+    </div>
+@endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-start">
