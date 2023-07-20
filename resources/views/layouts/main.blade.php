@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Portal E-posyandu</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -64,7 +64,7 @@
                         $pengaturan = App\Models\Ibu::where('akun_id', Auth::user()->id)->first();
                     @endphp
                     @if ($badge)
-                    <a class="nav-link" href="#" class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Profile </a>
+                    <a class="nav-link" href="#" class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Profile <i class="bi bi-chevron-down ms-5 ps-3"></i></a>
                     @else
                     <a class="nav-link" href="#" class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Profile <span class="badge text-bg-danger">Lengkapi</span></a>
                     @endif
